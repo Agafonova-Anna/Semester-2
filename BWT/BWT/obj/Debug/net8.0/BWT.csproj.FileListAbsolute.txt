@@ -1,0 +1,15 @@
+C:\Users\annaa\Semester-2\BWT\BWT\bin\Debug\net8.0\BWT.exe
+C:\Users\annaa\Semester-2\BWT\BWT\bin\Debug\net8.0\BWT.deps.json
+C:\Users\annaa\Semester-2\BWT\BWT\bin\Debug\net8.0\BWT.runtimeconfig.json
+C:\Users\annaa\Semester-2\BWT\BWT\bin\Debug\net8.0\BWT.dll
+C:\Users\annaa\Semester-2\BWT\BWT\bin\Debug\net8.0\BWT.pdb
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\BWT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\BWT.AssemblyInfoInputs.cache
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\BWT.AssemblyInfo.cs
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\BWT.csproj.CoreCompileInputs.cache
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\BWT.sourcelink.json
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\BWT.dll
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\refint\BWT.dll
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\BWT.pdb
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\BWT.genruntimeconfig.cache
+C:\Users\annaa\Semester-2\BWT\BWT\obj\Debug\net8.0\ref\BWT.dll
