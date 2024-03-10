@@ -3,6 +3,7 @@
 /// </summary>
 public class StackArray : IStack
 {
+    public static StackArray stackArray = new StackArray();
     private static int size = 20;
     private int top = -1;
     private float[] stack = new float[size];
@@ -14,13 +15,14 @@ public class StackArray : IStack
     /// <exception cref="InvalidOperationException">it is thrown out when the stack is full and no more items can be added.</exception>
     public void Push(float element)
     {
-        if (this.top > size)
+        if (top > size)
         {
-            throw new InvalidOperationException("Stack Overflow");
+            size *= 2;
+            Array.Resize<float>(ref stack, size);
         }
 
-        this.top++;
-        this.stack[this.top] = element;
+        top++;
+        stack[this.top] = element;
     }
 
     /// <summary>
@@ -30,11 +32,11 @@ public class StackArray : IStack
     /// <exception cref="InvalidOperationException">is thrown when the stack is empty.</exception>
     public float Pop()
     {
-        if (this.top < 0)
+        if (top < 0)
         {
             throw new InvalidOperationException("The Stack is empty");
         }
 
-        return this.stack[this.top--];
+        return stack[top--];
     }
 }

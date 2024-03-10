@@ -11,7 +11,7 @@ public class StackList : IStack
     /// <param name="element">Element to add.</param>
     public void Push(float element)
     {
-        this.Stack.AddFirst(element);
+        Stack.AddFirst(element);
     }
 
     /// <summary>
@@ -21,13 +21,14 @@ public class StackList : IStack
     /// <exception cref="InvalidOperationException">is thrown when the stack is empty.</exception>
     public float Pop()
     {
-        if (this.Stack.Count == 0)
+        if (!Stack.Any())
         {
             throw new InvalidOperationException("The Stack is empty");
         }
 
         float element = Stack.First.Value;
-        this.Stack.RemoveFirst();
+        Stack.RemoveFirst();
+
         return element;
     }
 }
