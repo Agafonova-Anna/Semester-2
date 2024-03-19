@@ -4,7 +4,7 @@
 /// </summary>
 public class TrieNode
 {
-    public int code;
+    public ushort code;
     public TrieNode[] children;
     public bool terminate;
 

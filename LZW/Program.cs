@@ -1,4 +1,5 @@
-﻿static void Main(string[] args)
+﻿
+static void Main(string[] args)
 {
     if (args.Length == 0)
     {
@@ -6,7 +7,7 @@
     }
     else
     {
-        if (args[1] == "-c")
+        if (args[1] == "--c")
         {
             string outputPath = args[0] + ".zipped";
             LZW.Compress(args[0], outputPath);
@@ -15,6 +16,7 @@
             double compressionRatio = (double)originalFile.Length / compressedFile.Length * 100;
             Console.WriteLine("Compression Ratio: " + compressionRatio + "%");
         }
+
         if (args[1] == "-u")
         {
             string outputPath = args[0].Substring(0, args[0].Length - 7);

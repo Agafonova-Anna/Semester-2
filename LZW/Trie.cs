@@ -5,8 +5,19 @@
 public class Trie
 {
     private TrieNode root = new TrieNode();
-    public int size = 0;
-    public bool Add(string element, int code)
+
+    /// <summary>
+    /// Gets or sets the size of the trie.
+    /// </summary>
+    public ushort Size { get; set; }
+
+    /// <summary>
+    /// Inserts elements into the tree.
+    /// </summary>
+    /// <param name="element">A string that should be added into the trie.</param>
+    /// <param name="code">The code of that particular string. </param>
+    /// <returns>True if the element was successfully added, false if it is already present.</returns>
+    public bool Add(string element, ushort code)
     {
         ArgumentException.ThrowIfNullOrEmpty(element);
 
@@ -31,13 +42,18 @@ public class Trie
         {
             currentNode.terminate = true;
             currentNode.code = code;
-            this.size++;
+            Size++;
             return true;
         }
 
         return false;
     }
 
+    /// <summary>
+    /// Checks whether the string is present in the trie.
+    /// </summary>
+    /// <param name="element">The string to be found.</param>
+    /// <returns>True if it is present, false if it is not.</returns>
     public bool Contains(string element)
     {
         ArgumentException.ThrowIfNullOrEmpty(element);
@@ -63,7 +79,12 @@ public class Trie
         return currentNode.terminate;
     }
 
-    public int GetCode(string word)
+    /// <summary>
+    /// Finds the code of an element in the trie.
+    /// </summary>
+    /// <param name="word">The string whose code should be found.</param>
+    /// <returns>The code of the word.</returns>
+    public ushort? GetCode(string word)
     {
         int level = 0;
         int length = word.Length;
@@ -77,7 +98,7 @@ public class Trie
 
             if (currentNode.children[index] == null)
             {
-                return -1;
+                return null;
             }
 
             currentNode = currentNode.children[index];

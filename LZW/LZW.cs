@@ -1,20 +1,32 @@
-﻿
+﻿/// <summary>
+/// The implementation of  LZW algorithm methods: Compress and Decompress.
+/// </summary>
 public class LZW
 {
+    /// <summary>
+    /// Compresses files using LZW algorithm.
+    /// </summary>
+    /// <param name="inputPath">The path to the file to be compressed.</param>
+    /// <param name="outputPath">The path to the compressed file.</param>
     public static void Compress(string inputPath, string outputPath)
     {
+        if (new FileInfo(inputPath).Length == 0)
+        {
+            throw new ArgumentNullException("InputFile is empty");
+        }
+
         Trie trie = new Trie();
         FileStream fileToCompress = new FileStream(inputPath, FileMode.Open);
         FileStream compressedFile = new FileStream(outputPath, FileMode.CreateNew);
-        byte[] input = new byte[fileToCompress.Length];
+        var input = new byte[fileToCompress.Length];
         fileToCompress.Read(input, 0, input.Length);
 
-        for (int i = 0; i < 256; i++)
+        for (var i = 0; i < 256; i++)
         {
-            trie.Add(((char)i).ToString(), i);
+            trie.Add(((char)i).ToString(), (ushort)i);
         }
 
-        int nextCode = 256;
+        ushort nextCode = 256;
         byte[] symbolCode;
         string current = string.Empty;
 
@@ -41,27 +53,36 @@ public class LZW
         compressedFile.Close();
     }
 
+    /// <summary>
+    /// Decompresses files compressed using LZW algorithm.
+    /// </summary>
+    /// <param name="inputPath">The path to the compressed file.</param>
+    /// <param name="outputPath">The path to the decompressed file.</param>
     public static void Decompress(string inputPath, string outputPath)
     {
-        Dictionary<int, string> dictionary = new Dictionary<int, string>();
-        for (int i = 0; i < 256; i++)
+        if (new FileInfo(inputPath).Length == 0)
         {
-            dictionary.Add(i, ((char)i).ToString());
+            throw new ArgumentNullException("InputFile is empty");
         }
 
+        Dictionary<ushort, string> dictionary = new Dictionary<ushort, string>();
+        for (var i = 0; i < 256; i++)
+        {
+            dictionary.Add((ushort)i, ((char)i).ToString());
+        }
 
-        List<int> codes = new List<int>();
+        List<ushort> codes = new List<ushort>();
         using (BinaryReader reader = new BinaryReader(File.OpenRead(inputPath)))
         {
             while (reader.BaseStream.Position != reader.BaseStream.Length)
             {
-                codes.Add(reader.ReadInt32());
+                codes.Add(reader.ReadUInt16());
             }
         }
 
         string current = dictionary[codes[0]];
         string output = current;
-        for (int i = 1; i < codes.Count; i++)
+        for (var i = 1; i < codes.Count; i++)
         {
             string entry = string.Empty;
             if (dictionary.ContainsKey(codes[i]))
@@ -74,48 +95,27 @@ public class LZW
             }
 
             output += entry;
-            dictionary.Add(dictionary.Count, current + entry[0].ToString());
+            dictionary.Add((ushort)dictionary.Count, current + entry[0].ToString());
             current = entry;
         }
 
         File.WriteAllText(outputPath, output);
     }
 
-    private static bool[] GetBinaryRepresentation(int number)
+    private static byte[] GetCodeForCompressedFile(ushort? number)
     {
-        bool[] binaryArray = new bool[32];
-
-        for (int i = 0; i < 32; i++)
+        bool[] boolArray = new bool[16];
+        for (int i = 0; i < 16; i++)
         {
-            binaryArray[i] = (number & (1 << i)) != 0;
+            boolArray[i] = (number & (1 << i)) != 0;
         }
 
-        return binaryArray;
-    }
-
-    private static byte[] GetByteArrayFromBinary(bool[] binaryArray)
-    {
-        byte[] byteArray = new byte[4];
-
-        for (int i = 0; i < 4; i++)
+        byte[] byteArray = new byte[2];
+        for (int i = 0; i < 8; i++)
         {
-            int value = 0;
-
-            for (int j = 0; j < 8; j++)
-            {
-                value |= (binaryArray[(i * 8) + j] ? 1 : 0) << j;
-            }
-
-            byteArray[i] = (byte)value;
+            byteArray[0] |= (byte)(boolArray[i] ? (1 << i) : 0);
+            byteArray[1] |= (byte)(boolArray[i + 8] ? (1 << i) : 0);
         }
-
-        return byteArray;
-    }
-
-    private static byte[] GetCodeForCompressedFile(int code)
-    {
-        bool[] binaryArray = GetBinaryRepresentation(code);
-        byte[] byteArray = GetByteArrayFromBinary(binaryArray);
 
         return byteArray;
     }
