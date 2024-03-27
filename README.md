@@ -1,5 +1,4 @@
-https://github.com/Agafonova-Anna/Semester-2/actions/workflows/ci.yml/badge.svg
-
+![example workflow](https://github.com/Agafonova-Anna/Semester-2/actions/workflows/ci.yml/badge.svg)
 <h2 align="center">This repository contains solutions to programming homework assignments for the second semester of study at St. Petersburg State University, C#.</h2>
 
 Setup:
